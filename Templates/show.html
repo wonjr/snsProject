@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% csrf_token %}
+    {% if lst %}
+        {% for x in lst %}
+            {{ x.name }}
+            {{ x.text }}
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
