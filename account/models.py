@@ -1,9 +1,15 @@
 from django.db import models
 
-# Create your models here.
-class Data(models.Model):
-    name = models.CharField(max_length=20)
-    text = models.CharField(max_length=200)
 
-    def __str__(self):#_=>이미 내장된 함수,private로 작동
-        return self.text
+class Data(models.Model):
+    name = models.CharField(max_length=30)
+    text = models.CharField(max_length=100)
+    pub_date = models.DateTimeField('date published')
+
+    def __str__(self):
+        return self.name
+
+
+class Photo(models.Model):
+    data = models.ForeignKey(Data, on_delete=models.CASCADE, null=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)

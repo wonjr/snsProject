@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% csrf_token %}
+    {% if lst %}
+    {% for x in lst.photo_set.all %}
+        id : &nbsp {{ x.data.id }} <br>
+        이름 : &nbsp {{ x.data.name }} <br>
+        내용 : &nbsp {{ x.data.text }} <br>
+        <img src="{{x.image.url}}" ><br>
+    {% endfor %}
+    {% endif %}
+</body>
+</html>

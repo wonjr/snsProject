@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{% url 'account:index' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    이름 : <input type="text" name="name" > <br>
+    내용 : <input type="text" name="text" > <br>
+    사진 : <input type="file" name="images" multiple> <br>
+    <input type="submit" value="전송"> <br>
+</form>
+</body>
+</html>

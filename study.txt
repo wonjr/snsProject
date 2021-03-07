@@ -1,0 +1,27 @@
+# git 사용법
+1. 로컬
+git status (추가할 내용확인)
+git add . (추가)
+git commit -m "1st commit"
+git branch -M main
+
+2.원격(github)
+git remote add origin https://github.com/turingclass/snsProject.git
+git push -u origin main
+
+# Django
+1. 프로젝트 생성
+django-admin startproject snsProject
+
+2. app 생성
+python manage.py startapp account
+
+3. 서버 실행
+python manage.py runserver
+
+4. 모델 생성
+python manage.py makemigrations account
+python manage.py migrate
+
+5. 관리자(admin)모드
+python manage.py createsuperuser

@@ -1,9 +1,13 @@
 from django.contrib import admin
-
-# Register your models here.
-from account.models import Data
+from account.models import Data, Photo
 
 
-class auth(admin.ModelAdmin):
-    list_display = ['id', 'name', 'text']
-admin.site.register(Data, auth)
+class PhotoInline(admin.TabularInline):
+    model = Photo
+
+
+class PostAdmin(admin.ModelAdmin):
+    inlines = [PhotoInline, ]
+
+
+admin.site.register(Data, PostAdmin)

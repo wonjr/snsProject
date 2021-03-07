@@ -11,34 +11,34 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-from typing import Dict, List, Any, Union, Tuple
-
 import environ
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-from environ import NoValue
+from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+#
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
 )
 # reading .env file
 environ.Env.read_env(
-    env_file=os.path.join(BASE_DIR,'.env')
+    env_file=os.path.join(BASE_DIR, '.env')
 )
 
 # False if not in os.environ
 DEBUG = env('DEBUG')
 
 # Raises django's ImproperlyConfigured exception if SECRET_KEY not in os.environ
-SECRET_KEY: Union[Union[float, Tuple[Any, ...], List[Any], Dict[Any, Any], Dict[str, Any], bool, NoValue], Any] = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account',
+    'accountapp',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -73,7 +75,7 @@ ROOT_URLCONF = 'snsProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR,'templates'],
+        'DIRS': [BASE_DIR, 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -137,3 +139,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
+LOGIN_REDIRECT_URL = reverse_lazy('accountapp:main')
+LOGOUT_REDIRECT_URL = reverse_lazy('accountapp:login')
