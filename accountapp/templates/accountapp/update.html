@@ -7,7 +7,7 @@
         <h4> 회원수정 </h4>
     </div>
 <div style="text-align:center">
-    <form action="{% url 'accountapp:update' pk=user.pk %}" method="post">
+    <form action="{% url 'accountapp:update' pk=target_user.pk %}" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
         <p></p>

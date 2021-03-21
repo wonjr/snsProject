@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<div>
+    <div style="text-align:center">
+        <p>
+           {{ target_user.date_joined }}
+        </p>
+
+        {% if target_user.profile %}
+            <img src="{{ target_user.profile.image.url }}" alt="" style="height: 8rem; width: 8rem; border-radius: 10rem; margin-bottom: .5rem;">
+            <h5 style="font-family: 'NanumGothic'">
+                {{ target_user.profile.nickname }}
+                {% if target_user.profile == user.profile %}
+                    <a href="{% url 'profileapp:update' pk=target_user.profile.pk %}" style="text-decoration:none">
+                        edit
+                    </a>
+                {% endif %}
+            </h5>
+            <h6>
+            {{ target_user.profile.message }}
+        </h6>
+        {% else %}
+            <img src="../../media/basic.jpg" alt="" style="height: 8rem; width: 8rem; border-radius: 10rem; margin-bottom: .5rem;">
+            <a href="{% url 'profileapp:create' %}" style="text-decoration:none">
+                <p>
+                    {% if target_user.pk == user.pk %}
+                        프로필 생성
+                    {%  endif %}
+                </p>
+            </a>
+        {% endif %}
+
+        <br><br>
+
+        {% if target_user == user %}
+            <a href="{% url 'accountapp:update' pk=target_user.pk %}" style="text-decoration:none">
+                <p>
+                    회원수정
+                </p>
+            </a>
+            <a href="{% url 'accountapp:delete' pk=target_user.pk %}" style="text-decoration:none">
+                <p>
+                    회원탈퇴
+                </p>
+            </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
