@@ -18,8 +18,8 @@
                 {% endif %}
             </h5>
             <h6>
-            {{ target_user.profile.message }}
-        </h6>
+                {{ target_user.profile.message }}
+            </h6>
         {% else %}
             <img src="../../media/basic.jpg" alt="" style="height: 8rem; width: 8rem; border-radius: 10rem; margin-bottom: .5rem;">
             <a href="{% url 'profileapp:create' %}" style="text-decoration:none">

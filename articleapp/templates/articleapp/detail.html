@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+
+<div>
+    <div style="text-align: center; max-width: 700px; margin: 1rem auto">
+        <h2>
+            {{ target_article.title }}
+        </h2>
+            {{ target_article.writer.profile.nickname }}
+        <hr>
+        <h6>
+            <img src="{{ target_article.image.url }}" alt="" style="width: 450px; cursor: pointer;"
+            onclick="doImgPop('{{ target_article.image.url }}')">
+        </h6>
+
+        {{ target_article.content }}
+
+                <br><hr>
+
+        {% if target_article.writer == user %}
+        <a href="{% url 'articleapp:update' pk=target_article.pk %}" class="btn btn-primary rounded-pill col-1 mt-3 mb-3">
+                Article 수정
+        </a>
+        <a href="{% url 'articleapp:delete' pk=target_article.pk %}" class="btn btn-danger rounded-pill col-1 mt-3 mb-3">
+                Article 삭제
+        </a>
+        {% endif %}
+        <br>
+        {% if not user.is_authenticated %}
+            <i class="far fa-thumbs-up fa-lg animated infinite bounce delay-1s" style="font-size: 1rem; color:gray;">
+            </i>
+            {{ target_article.like_users.count }}
+            <i class="far fa-thumbs-down fa-lg animated infinite bounce delay-1s" style="font-size: 1rem; color:gray;">
+            </i>
+            {{ target_article.like_users.count }}
+        {% else %}
+            {% if request.user in target_article.like_users.all %}
+                <a href="{% url 'articleapp:like' target_article.pk %}" style="text-decoration: none">
+                    <i class="far fa-thumbs-up fa-lg animated infinite bounce delay-1s"
+                       style="font-size: 1rem; color:red;">
+                    </i>
+                </a>
+                <span style="font-size: .8rem">{{ target_article.like_users.count }}</span>
+            {% else %}
+                <a href="{% url 'articleapp:like' target_article.pk %}" style="text-decoration: none">
+                    <i class="far fa-thumbs-up fa-lg animated infinite bounce delay-1s"
+                       style="font-size: 1rem; color:gray;">
+                    </i>
+                </a>
+                <span style="font-size: .8rem">{{ target_article.like_users.count }}</span>
+            {% endif %}
+
+            {% if request.user in target_article.dislike_users.all %}
+                <a href="{% url 'articleapp:dislike' target_article.pk %}" style="text-decoration: none">
+                    <i class="far fa-thumbs-down fa-lg animated infinite bounce delay-1s"
+                       style="font-size: 1rem; color:blue;">
+                    </i>
+                </a>
+                <span style="font-size: .8rem">{{ target_article.dislike_users.count }}</span>
+            {% else %}
+                <a href="{% url 'articleapp:dislike' target_article.pk %}" style="text-decoration: none">
+                    <i class="far fa-thumbs-down fa-lg animated infinite bounce delay-1s"
+                       style="font-size: 1rem; color:gray;">
+                    </i>
+                </a>
+                <span style="font-size: .8rem">{{ target_article.dislike_users.count }}</span>
+            {% endif %}
+        {% endif %}
+    </div>
+    {% for comment in target_article.comment.all %}
+        {% include 'commentapp/detail.html' with comment=comment %}
+    {% endfor %}
+    {% include 'commentapp/create.html' with article=target_article %}
+</div>
+
+<script>
+function doImgPop(img){
+    img1= new Image();
+    img1.src=(img);
+    imgControll(img);
+}
+
+function imgControll(img){
+    if((img1.width!=0)&&(img1.height!=0)){
+        viewImage(img);
+    }
+    else{
+        controller="imgControll('"+img+"')";
+        intervalID=setTimeout(controller,20);
+    }
+}
+
+function viewImage(img){
+    W=img1.width;
+    H=img1.height;
+    O="width="+W+",height="+H+",scrollbars=no";
+    imgWin=window.open("","",O);
+    imgWin.document.write("<html><head><title>{{ target_article.title }}</title></head>");
+    imgWin.document.write("<body topmargin=0 leftmargin=0></body>");
+    imgWin.document.write("<img src="+img+" onclick='self.close()' style='cursor:pointer;' title ='클릭하시면 창이 닫힙니다.'>");
+    imgWin.document.close();
+}
+</script>
+
+{% endblock %}

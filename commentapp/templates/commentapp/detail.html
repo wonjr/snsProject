@@ -1,0 +1,24 @@
+<div style="border: 1px dotted; width: 100%; height: 70px; text-align: left; padding: 1%; margin: 1rem 0;
+    border-radius: 1rem; border-color: #bbb;">
+    <div>
+        <span style="font-size: .9rem; color: #050505">
+            <img src="{{ comment.writer.profile.image.url }}" alt="" style="height: 1.5rem; width: 1.5rem; border-radius: 1.5rem; ">
+            {{ comment.writer.profile.nickname }}
+        </span>
+        &nbsp&nbsp&nbsp
+        <span style="font-size: .8rem; color: #385185">
+            {{ comment.created_at }}
+        </span>
+    </div>
+    <div style="font-size: 15px; color: #565656; margin: .6rem 0;">
+        &nbsp&nbsp&nbsp
+        {{ comment.content }}
+        {% if comment.writer == user %}
+        <div style="font-size: .5rem; text-align: right; margin: -1.7rem 0">
+            <a href="{% url 'commentapp:delete' pk=comment.pk %}" style="font-size: .5rem;" class="btn btn-sm btn-secondary active rounded-pill mb-3">
+                삭제
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>

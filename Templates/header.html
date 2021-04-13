@@ -3,18 +3,20 @@
         <h1>Tstargram</h1>
     </div>
     <div>
-        <span>nav1</span>
+        <a href="{% url 'articleapp:list' %}" style="text-decoration:none">
+            <span>Articles</span>
+        </a>
         <span>nav2</span>
         <span>nav3</span>
         {% if not user.is_authenticated %}
-        <a href="{% url 'accountapp:login' %}?next={{ request.path }}">
+        <a href="{% url 'accountapp:login' %}?next={{ request.path }}"style="text-decoration:none">
             <span>Login</span>
         </a>
         {% else %}
-        <a href="{% url 'accountapp:detail' pk=user.pk %}">
+        <a href="{% url 'accountapp:detail' pk=user.pk %}"style="text-decoration:none">
             <span>MyPage</span>
         </a>
-        <a href="{% url 'accountapp:logout' %}?next={{ request.path }}">
+        <a href="{% url 'accountapp:logout' %}?next={{ request.path }}"style="text-decoration:none">
             <span>Logout</span>
         </a>
         {% endif %}
